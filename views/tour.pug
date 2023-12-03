@@ -75,16 +75,17 @@ block content
                   img.reviews__avatar-img(src=`/img/users/${review.user.photo}`, alt='Jim Brown')
                   h6.reviews__user #{review.user.name}
                 p.reviews__text #{review.review}
+               
                 .reviews__rating
-                  svg.reviews__star.reviews__star--active
+                  svg.reviews__star.reviews__star`${1<=raview.rating?"--active":"--inactive"}`
                     use(xlink:href='/img/icons.svg#icon-star')
-                  svg.reviews__star.reviews__star--active
+                  svg.reviews__star.reviews__star`${2<=raview.rating?"--active":"--inactive"}`
                     use(xlink:href='/img/icons.svg#icon-star')
-                  svg.reviews__star.reviews__star--active
+                  svg.reviews__star.reviews__star`${3<=raview.rating?"--active":"--inactive"}`
                     use(xlink:href='/img/icons.svg#icon-star')
-                  svg.reviews__star.reviews__star--active
+                  svg.reviews__star.reviews__star`${4<=raview.rating?"--active":"--inactive"}`
                     use(xlink:href='/img/icons.svg#icon-star')
-                  svg.reviews__star.reviews__star--active
+                  svg.reviews__star.reviews__star`${5==raview.rating?"--active":"--inactive"}`
                     use(xlink:href='/img/icons.svg#icon-star')
 
       section.section-cta
