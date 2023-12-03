@@ -32,7 +32,7 @@ body {
   font-weight: 300;
   font-family: 'Lato', sans-serif;
   color: #777;
-  padding: 3rem;
+ 
   min-height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -430,8 +430,9 @@ body {
   background-color: #fcfcfc;
   margin-top: calc(0px - var(--section-rotate));
   display: -webkit-box;
-  display: -ms-flexbox;
+  display: -ms-flexbox; 
   display: flex;
+
 }
 .section-description > * {
   padding: 0 8vw;

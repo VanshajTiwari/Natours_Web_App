@@ -1,4 +1,5 @@
 const User=require(__dirname+'/../models/userModel');
+const { getMaxListeners } = require("../models/tourModel");
 const AppError = require("../utils/appError");
 // const tours=JSON.parse(fs.readFileSync(__dirname+'/../dev-data/data/tours-simple.json','utf-8'));
 const catchAsync=require("./../utils/catchAsync");
@@ -32,19 +33,30 @@ exports.updateMe=catchAsync(async(req,res,next)=>{
     }
     const filteredBody=filterObj(req.body,'name','email');
     //2) Update user document
-    const updatedUser=await User.findByIdAndUpdate(res.locals.users.id,filteredBody,{
-        new:true, 
-        runValidator:true
-    });
-    res.status(200).json({
-        status:"success",
-        data:{updatedUser}
-    })
+    try{
+        const updatedUser=await User.findByIdAndUpdate(res.locals.users.id,filteredBody,{
+            new:true, 
+            runValidator:true
+        });
+
+        res.status(200).render("account.pug",{user:updatedUser});
+    }
+    catch(err){
+        res.status(503).json({status:"failed",Error:"Email is already Taken"});
+    }
 }); 
 exports.getMe=(req,res,next)=>{
     req.params.id=res.locals.users.id;
     next();
 }
+exports.updatePasswordUpdate=catchAsync(async(req,res)=>{
+    const {curr,newPass,confirmPass}=req.body;
+    if(newPass!==confirmPass)
+        return res.status(200).json({status:"failed",Error:"Password Mismatch"});
+  //  console.log(res.locals.users);
+    const updateUser=await User.findByIdAndUpdate(res.locals.users._id,{password:newPass}).select("+password");
+    res.status(200).json({status:"Success",Message:updateUser});
+});
 exports.getUser=factory.getOne(User);
 // Do Not update passwords 
 exports.updateUser=factory.updateOne(User);

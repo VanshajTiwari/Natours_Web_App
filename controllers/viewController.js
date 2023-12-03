@@ -18,7 +18,7 @@ exports.getOverview=catchAsync (async (req,res)=>{
 });
 exports.getTour=catchAsync(async(req,res)=>{
     console.log(req.params);
-    const tour= await Tour.findOne({slug: req.params.slug}).populate({path:'reviews',fields:"reviews rating user"}).populate({path:"guides"});
+    const tour= await Tour.findOne({slug: req.params.slug}).populate({path:'reviews',fields:"reviews rating user",populate:{path:"user"}}).populate({path:"guides"});
     if(!tour)
         return res.status(404).render('errorTemplate');
     //1) Get tha data, for the requested tour (including reviews and guides)
@@ -26,12 +26,13 @@ exports.getTour=catchAsync(async(req,res)=>{
     
     //3) render template using data
     res.status(200).render('tour',{
-        tour:tour}
+        tour:tour,
+        user:res.locals.users
+      }
     )
 });
 exports.getLoginForm=(req,res)=>{
-  console.log("INSIDE LOGIN MIDDLEWARE")
-  console.log(res.locals);
+
   if(res.locals.users){
     return this.getOverview(req,res);
   }

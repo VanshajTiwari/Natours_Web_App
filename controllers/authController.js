@@ -110,6 +110,7 @@ exports.protect=async(req,res,next)=>{
         // }
         req.user=fresherUser;
         res.locals.users=fresherUser;
+    
         next();
       //  viewControll.getOverview(req,res,next);
     }

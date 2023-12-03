@@ -18,7 +18,7 @@ block content
                 use(xlink:href='/img/icons.svg#icon-map-pin')
               span.heading-box__text #{tour.startLocation.description}
 
-        section.section-description
+      section.section-description
           .overview-box
             div
               .overview-box__group
@@ -31,8 +31,8 @@ block content
                 .overview-box__detail
                   svg.overview-box__icon
                     use(xlink:href='/img/icons.svg#icon-trending-up')
-                  span.overview-box__label #{tour.difficulty}
-                  span.overview-box__text Medium
+                  span.overview-box__label Difficulty
+                  span.overview-box__text #{tour.difficulty}
                 .overview-box__detail
                   svg.overview-box__icon
                     use(xlink:href='/img/icons.svg#icon-user')
@@ -63,30 +63,31 @@ block content
         .picture-box
           img.picture-box__img.picture-box__img--3(src='/img/tours/tour-5-3.jpg', alt='The Park Camper Tour 1')
 
-        section.section-map
+      section.section-map
           #map
 
-        section.section-reviews
+      section.section-reviews
           .reviews
+            each review in tour.reviews
+                      
+              .reviews__card
+                .reviews__avatar
+                  img.reviews__avatar-img(src=`/img/users/${review.user.photo}`, alt='Jim Brown')
+                  h6.reviews__user #{review.user.name}
+                p.reviews__text #{review.review}
+                .reviews__rating
+                  svg.reviews__star.reviews__star--active
+                    use(xlink:href='/img/icons.svg#icon-star')
+                  svg.reviews__star.reviews__star--active
+                    use(xlink:href='/img/icons.svg#icon-star')
+                  svg.reviews__star.reviews__star--active
+                    use(xlink:href='/img/icons.svg#icon-star')
+                  svg.reviews__star.reviews__star--active
+                    use(xlink:href='/img/icons.svg#icon-star')
+                  svg.reviews__star.reviews__star--active
+                    use(xlink:href='/img/icons.svg#icon-star')
 
-            .reviews__card
-              .reviews__avatar
-                img.reviews__avatar-img(src='/img/users/user-7.jpg', alt='Jim Brown')
-                h6.reviews__user Jim Brown
-              p.reviews__text Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque dignissimos sint quo commodi corrupti accusantium veniam saepe numquam.
-              .reviews__rating
-                svg.reviews__star.reviews__star--active
-                  use(xlink:href='/img/icons.svg#icon-star')
-                svg.reviews__star.reviews__star--active
-                  use(xlink:href='/img/icons.svg#icon-star')
-                svg.reviews__star.reviews__star--active
-                  use(xlink:href='/img/icons.svg#icon-star')
-                svg.reviews__star.reviews__star--active
-                  use(xlink:href='/img/icons.svg#icon-star')
-                svg.reviews__star.reviews__star--active
-                  use(xlink:href='/img/icons.svg#icon-star')
-
-        section.section-cta
+      section.section-cta
           .cta
             .cta__img.cta__img--logo
               img(src='/img/logo-white.png', alt='Natours logo')
