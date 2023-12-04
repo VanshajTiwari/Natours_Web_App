@@ -6,6 +6,7 @@
   "scripts": {
     "start-dev": "nodemon server.js",
     "start-pro": "SET NODE_ENV=production & nodemon server.js",
+    "build":"npm i",
     "debug": "ndb server.js"
   },
   "author": "Vanshaj Tiwari",
