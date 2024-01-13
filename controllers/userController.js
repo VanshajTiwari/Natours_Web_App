@@ -49,14 +49,14 @@ exports.getMe=(req,res,next)=>{
     req.params.id=res.locals.users.id;
     next();
 }
-exports.updatePasswordUpdate=catchAsync(async(req,res)=>{
-    const {curr,newPass,confirmPass}=req.body;
-    if(newPass!==confirmPass)
-        return res.status(200).json({status:"failed",Error:"Password Mismatch"});
-  //  console.log(res.locals.users);
-    const updateUser=await User.findByIdAndUpdate(res.locals.users._id,{password:newPass}).select("+password");
-    res.status(200).json({status:"Success",Message:updateUser});
-});
+// exports.updatePasswordUpdate=catchAsync(async(req,res)=>{
+//     const {curr,newPass,confirmPass}=req.body;
+//     if(newPass!==confirmPass)
+//         return res.status(200).json({status:"failed",Error:"Password Mismatch"});
+//   //  console.log(res.locals.users);
+//     const updateUser=await User.findByIdAndUpdate(res.locals.users._id,{password:newPass}).select("+password");
+//     res.status(200).json({status:"Success",Message:updateUser});
+// });
 exports.getUser=factory.getOne(User);
 // Do Not update passwords 
 exports.updateUser=factory.updateOne(User);

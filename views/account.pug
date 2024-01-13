@@ -37,8 +37,8 @@ block content
               input#email.form__input(type='email', value=`${user.email}`,name="email" required) 
             .form__group.form__photo-upload
               img.form__user-photo(src=`img/users/user-${user.name}.jpg`, alt='User photo')
-              input(type="file",accept="image/*" name="profile_image" id="profile_image")
-              a.btn-text(href='#profile_image') Choose new photo
+              input(type="file",accept="image/*" name="profile_image" id="profile_image" hidden)
+              a.btn-text(id='profile_image_') Choose new photo
             .form__group.right
               button.btn.btn--small.btn--green Save settings
         .line &nbsp;
@@ -47,12 +47,12 @@ block content
           form.form.form-user-settings(action="/user-password-update" method="post")
             .form__group
               label.form__label(for='password-current') Current password
-              input#password-current.form__input(type='password', placeholder='••••••••',name="curr" required, minlength='8')
+              input#password-current.form__input(type='password', placeholder='••••••••',name="currentPassword" required, minlength='8')
             .form__group
               label.form__label(for='password') New password
-              input#password.form__input(type='password', placeholder='••••••••',name="newPass" required, minlength='8')
+              input#password.form__input(type='password', placeholder='••••••••',name="NewPassword" required, minlength='8')
             .form__group.ma-bt-lg
               label.form__label(for='password-confirm') Confirm password
-              input#password-confirm.form__input(type='password', placeholder='••••••••',name="confirmPass" required, minlength='8')
+              input#password-confirm.form__input(type='password', placeholder='••••••••',name="ConfirmPassword" required, minlength='8')
             .form__group.right
               button.btn.btn--small.btn--green Save password
