@@ -5,7 +5,7 @@
   "description": "learning Express",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "node server.js",
     "start": "NODE_ENV=production & nodemon server.js",
     "debug": "ndb server.js"
   },
