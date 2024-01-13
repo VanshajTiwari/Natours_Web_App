@@ -32,7 +32,8 @@ Router.use(authController.protect);
 Router.route('/login').get(viewsControll.getLoginForm);
 Router.route('/').get(viewsControll.getOverview);
 Router.route('/tour/:slug').get(viewsControll.getTour);
-Router.get('/me',authController.islogged,viewsControll.getAccount); 
+Router.use(authController.islogged);
+Router.get('/me',viewsControll.getAccount); 
 Router.get('/logout',authController.logout)
 Router.post('/update-user-details',upload.single("profile_image"),userController.updateMe);
 Router.post("/user-password-update",authController.updatePassword);

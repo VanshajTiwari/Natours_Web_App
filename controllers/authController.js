@@ -23,7 +23,6 @@ const createSendToken=async(user,statusCode,res)=>{
     })
 } 
 exports.signup=async (req,res)=>{
-    
     const newUser = new User({
         name:req.body.name,
         email:req.body.email,
@@ -101,7 +100,7 @@ exports.protect=async(req,res,next)=>{
       //  res.status(200).send(fresherUser);
         if(!fresherUser){
             return next(
-                new AppError('The User beloging to this token does no longer exist',401)
+                new AppError('The User beloging to this token does no longer exist Plz Clear Cookie',401)
             )
         }
         //4 check if user changed pass after the token was issued 
