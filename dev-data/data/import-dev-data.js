@@ -6,7 +6,7 @@ dotenv.config({path:'./../../config.env'});
 const Tour=require('./../../models/tourModel');
 const User=require('./../../models/userModel');
 const Review=require('./../../models/reviewModel');
-const Str=process.env.DATABASE_LOCAL;
+const Str=process.env.DATABASE;
 const DB = Str//.replace('<password>',process.env.DATABASE_PASSWORD);
 mongoose
 .connect(DB,{
