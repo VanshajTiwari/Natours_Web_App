@@ -35,5 +35,5 @@ Router.route('/tour/:slug').get(viewsControll.getTour);
 Router.get('/me',authController.islogged,viewsControll.getAccount); 
 Router.get('/logout',authController.logout)
 Router.post('/update-user-details',upload.single("profile_image"),userController.updateMe);
-Router.post("/user-password-update",userController.updatePasswordUpdate);
+Router.post("/user-password-update",authController.updatePassword);
 module.exports=Router;

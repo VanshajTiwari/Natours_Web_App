@@ -3,7 +3,7 @@ const viewControll=require('./viewController');
 const catchAsync=require("./../utils/catchAsync");
 const jwt=require('jsonwebtoken');
 const AppError=require('./../utils/appError');
-const sendEmail=require('./../utils/email');
+const Email=require('./../utils/email');
 const crypto=require('crypto');
 const signToken= id=>{
  return  jwt.sign({id:id},process.env.JWT_SECRET,{
@@ -19,23 +19,24 @@ const createSendToken=async(user,statusCode,res)=>{
         token,
         data:{
             user
-        }
+        } 
     })
 } 
-exports.signup= catchAsync(
-    async (req,res)=>{
+exports.signup=async (req,res)=>{
     
-    const newUser = await User.create({
+    const newUser = new User({
         name:req.body.name,
         email:req.body.email,
         password:req.body.password,
         passwordConfirm:req.body.passwordConfirm,
         role:req.body.role
     });
+    await newUser.save();
+    const url=`${req.protocol}://${req.get('host')}/me`;
+    await new Email(newUser,url).sendWelcome();
     //res.status(200).json({"run":"sfmdfmdf"})
    await createSendToken(newUser,201,res);
-}
-);
+};
 exports.logout=catchAsync(async (req,res,next)=>{
     res.cookie('jwt',"",{expires:new Date(Date.now()+10*1000)});
 
@@ -44,14 +45,12 @@ exports.logout=catchAsync(async (req,res,next)=>{
 });
 exports.login=catchAsync(async (req,res,next)=>{
     const {email,password}=req.body;
-    console.log(email,password);
     // 1) check if email and password is exist
     if(!email||!password){
        return next(new AppError("plz provide email and password"),400);
     }
     // 2) Check if user exists && password is correct
      const user= await User.findOne({ email:email}).select("+password");
-     console.log(user);
     // const correct=await user.correctPassword(password,user.password); //return boolean value 
      if(!user || !(await user.correctPassword(password,user.password))){
         return next(new AppError("Incorrect Email or password"),401);
@@ -70,6 +69,7 @@ exports.login=catchAsync(async (req,res,next)=>{
     // });
 });
 exports.islogged=async(req,res,next)=>{
+    console.log("isLOGEED");
     if(!res.locals.users)
        return res.redirect("/");
     return next();
@@ -125,8 +125,7 @@ exports.restrictTo =(...roles)=>{
         //roles is an array['admin','lead-guide','guide',user].role='user'
         if(!roles.includes(req.user.role))
             return next(new AppError("Use do not have permission to operate"),"403");
-        console.log()
-            next();
+        next();
     }
 }
 exports.forgetPasssword=catchAsync(async (req,res,next)=>{
@@ -139,14 +138,9 @@ exports.forgetPasssword=catchAsync(async (req,res,next)=>{
     await user.save({validateBeforeSave:false});
     // 3) send it to user's email
     const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
-    const message=`ForGOT your Password? submit a PATCH REquest with your new password and passwordConfirm to ${resetURL}.
-    IF you didn't with forget your password plz ignore thi smeail;`
+
     try{
-        await sendEmail({
-            email:user.email,
-            subject:'Yout password reset token(Valid for 10 min)',
-            message
-        });
+        await new Email(user,resetURL).sendPasswordReset();
         res.status(200).json({
             status:'success',
             message:'Token sent to email'
@@ -163,7 +157,6 @@ exports.forgetPasssword=catchAsync(async (req,res,next)=>{
    }
 });
 exports.resetPassword=catchAsync(async(req,res,next)=>{
-    console.log('');
     //1) GET user based on the token
     const hasedToken=crypto
         .createHash('sha256')
@@ -188,9 +181,8 @@ exports.resetPassword=catchAsync(async(req,res,next)=>{
     createSendToken(user,200,res)
 });
 exports.updatePassword=catchAsync(async(req,res,next)=>{
-
     //1)Get user from collection
-    const user= await User.findById(req.user.id).select("+password")
+    const user= await User.findById(res.locals.users._id).select("+password")
 
     //2) Check if POSTED current password is correct
     if(!(await user.correctPassword(req.body.currentPassword,user.password))){

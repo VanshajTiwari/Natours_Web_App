@@ -1,4 +1,7 @@
 extends base
+block append head           
+  script(src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js')
+  link(href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css',rel='stylesheet')
 block content
       section.section-header
         .header__hero
@@ -64,7 +67,7 @@ block content
           img.picture-box__img.picture-box__img--3(src='/img/tours/tour-5-3.jpg', alt='The Park Camper Tour 1')
 
       section.section-map
-          #map
+          #map(data-locations=`${JSON.stringify(tour.locations)}`)
 
       section.section-reviews
           .reviews
@@ -93,4 +96,8 @@ block content
             .cta__content
               h2.heading-secondary What are you waiting for?
               p.cta__text 10 days. 1 adventure. Infinite memories. Make it yours today!
-              button.btn.btn--green.span-all-rows Book tour now!
+              if user
+                button.btn.btn--green.span-all-rows#book-tour(data-tour-id=`${tour.id}`) Book tour now!
+              else 
+                a.btn.btn--green.span-all-rows(href="/login") Log in to book tour
+      script(src="/js/mapbox.js")

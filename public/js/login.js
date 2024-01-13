@@ -26,7 +26,9 @@ const loggingOut= async ()=>{
     }
    
 }
-document.querySelector('.login--form').addEventListener('submit',e=>{
+const login_=document.querySelector('.login--form')
+if(login_)
+login_.addEventListener('submit',e=>{
   //  e.preventDefault();
     const email=document.getElementById('email').value;
     const password=document.getElementById('password').value;
@@ -34,7 +36,7 @@ document.querySelector('.login--form').addEventListener('submit',e=>{
   //  login(email,password);
 })
 const logout=document.querySelector(".nav__el--logout")
-console.log(logout);
+if(logout)
 logout.addEventListener("click",e=>{
   //  console.log("hey")
   //  e.preventDefault();

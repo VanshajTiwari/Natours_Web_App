@@ -14,6 +14,7 @@ const tourRouter=require('./Routes/tourRouter');
 const userRouter=require('./Routes/userRoutes');
 const reviewRouter=require("./Routes/reviewRoutes");
 const viewRouter=require('./Routes/viewRoutes');
+const bookingRouter=require("./Routes/bookingRoutes");
 //limit Requests
 const limiter=rateLimit({
     max:10000,
@@ -47,10 +48,11 @@ App.use(Express.static(__dirname+"/public"));
  App.set('view engine','pug');
  App.set('views',path.join(__dirname,'/views'));
 
-App.use('/',viewRouter);
-App.use('/api/v1/tours',tourRouter);
 App.use('/api/v1/users',userRouter);
+App.use('/api/v1/tours',tourRouter);
 App.use('/api/v1/reviews',reviewRouter);
+App.use('/api/v1/bookings',bookingRouter);
+App.use('/',viewRouter);
 App.all("*",(req,res,next)=>{
     // const error=new Error(`Can't Find ${req.originalUrl} on this server`);
     // error.status="failed";
