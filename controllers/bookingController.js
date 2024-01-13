@@ -46,7 +46,7 @@ exports.getCheckoutSession=catchAsync(async(req,res,next)=>{
 
 exports.createBookingCheckout=(req,res)=>{
     const {tourId,user,price}=req.query;
-    if(!touId && !user && !price){
+    if(!tourId && !user && !price){
         next();
     }
 }
