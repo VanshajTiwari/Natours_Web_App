@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL="http://127.0.0.1:7575"
+const BASE_URL="https://my-trip-igi.onrender.com"
 export async function getter(){
       console.log(await axios.get(BASE_URL));
 }
