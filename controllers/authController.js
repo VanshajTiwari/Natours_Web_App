@@ -34,7 +34,9 @@ exports.signup=async (req,res)=>{
     const url=`${req.protocol}://${req.get('host')}/me`;
     await new Email(newUser,url).sendWelcome();
     //res.status(200).json({"run":"sfmdfmdf"})
-   await createSendToken(newUser,201,res);
+    res.cookie("jwt",signToken(newUser._id));
+    res.redirect("/");
+
 };
 exports.logout=catchAsync(async (req,res,next)=>{
     res.cookie('jwt',"",{expires:new Date(Date.now()+10*1000)});

@@ -31,6 +31,9 @@ exports.getTour=catchAsync(async(req,res)=>{
       }
     )
 });
+exports.getSignupForm=(req,res)=>{
+  res.status(200).render('signup',{title:"Signup"});
+}
 exports.getLoginForm=(req,res)=>{
 
   if(res.locals.users){

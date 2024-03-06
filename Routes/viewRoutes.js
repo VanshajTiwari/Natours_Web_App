@@ -29,6 +29,7 @@ const upload=multer({storage,fileFilter:imageFilter});
 //     });
 // });
 Router.use(authController.protect);
+Router.route('/signup').get(viewsControll.getSignupForm);
 Router.route('/login').get(viewsControll.getLoginForm);
 Router.route('/').get(viewsControll.getOverview);
 Router.route('/tour/:slug').get(viewsControll.getTour);

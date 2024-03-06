@@ -3,7 +3,6 @@ const Tour=require("./../models/tourModel");
 const catchAsync=require("./../utils/catchAsync");
 const factory=require("./handleFactory");
 const AppError=require("./../utils/appError");
-const { ERR_TX_UNSUPPORTED_EIP_1559 } = require("web3");
 
 
 exports.getCheckoutSession=catchAsync(async(req,res,next)=>{
@@ -24,7 +23,7 @@ exports.getCheckoutSession=catchAsync(async(req,res,next)=>{
                 // amount:tour.price*100, 
                 // currency:"usd",
                 price_data:{
-                    currency:'usd',
+                    currency:'inr',
                     unit_amount:tour.price*100,
                     product_data:{
                         name:tour.name,
